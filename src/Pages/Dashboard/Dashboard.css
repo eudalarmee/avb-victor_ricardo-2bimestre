@@ -1,0 +1,54 @@
+.dashboard-container {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    gap: 2rem;
+    min-height: 100vh;
+    background-color: #f0f8ff;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  .dashboard-sidebar {
+    background-color: #007BFF;
+    padding: 2rem;
+    color: #ffffff;
+    border-radius: 0 20px 20px 0;
+  }
+  
+  .dashboard-sidebar h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .dashboard-sidebar ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .dashboard-sidebar li {
+    margin-bottom: 1rem;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+  }
+  
+  .dashboard-sidebar li:hover {
+    transform: translateX(5px);
+  }
+  
+  .dashboard-main {
+    padding: 2rem;
+  }
+  
+  .dashboard-main h1 {
+    font-size: 2rem;
+    color: #007BFF;
+    margin-bottom: 1.5rem;
+  }
+  
+  .dashboard-card {
+    background-color: #ffffff;
+    border-radius: 15px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    margin-bottom: 1.5rem;
+  }
+  
