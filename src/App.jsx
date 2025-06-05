@@ -1,67 +1,30 @@
-import React, { useState } from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-
-import Header from './components/Header/Header';
-import Home from './Pages/Home';
-import Favorites from './Pages/Favorites';
-import About from './Pages/About';
-
-import Dashboard from './Pages/Dashboard';
-import Introducao from './Pages/Introducao';
-import Perfil from './Pages/Perfil';
-import Login from './Pages/Login';
-
 import { FavoritosProvider } from './context/FavoritosContext';
+import Historico from './components/Historico';
+import Item from './components/Item';
+import ModalFavorito from './components/ModalFavorito';
 
-function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+const itensDisponiveis = [
+  "Livro: ReactJS",
+  "Curso: Front-End",
+  "Artigo: Context API",
+  "Vídeo: Componenteização",
+  "Podcast: Tech Trends"
+];
 
-  const handleLogin = () => setIsLoggedIn(true);
-  const handleLogout = () => setIsLoggedIn(false);
-
+const App = () => {
   return (
     <FavoritosProvider>
-      <BrowserRouter>
-        <Header />
-        <Routes>
-          {/* Rotas públicas */}
-          <Route path="/" element={<Home />} />
-          <Route path="/favoritos" element={<Favorites />} />
-          <Route path="/sobre" element={<About />} />
+      <div className="p-8 bg-slate-100 min-h-screen">
+        <h1 className="text-2xl font-bold mb-6">Itens Disponíveis</h1>
+        {itensDisponiveis.map((item, index) => (
+          <Item key={index} item={item} />
+        ))}
 
-          {/* Rota de login */}
-          <Route
-            path="/login"
-            element={
-              isLoggedIn ? <Navigate to="/dashboard" /> : <Login onLogin={handleLogin} />
-            }
-          />
-
-          {/* Rotas protegidas */}
-          <Route
-            path="/dashboard"
-            element={
-              isLoggedIn ? <Dashboard onLogout={handleLogout} /> : <Navigate to="/login" />
-            }
-          />
-          <Route
-            path="/introducao"
-            element={isLoggedIn ? <Introducao /> : <Navigate to="/login" />}
-          />
-          <Route
-            path="/perfil"
-            element={isLoggedIn ? <Perfil /> : <Navigate to="/login" />}
-          />
-
-          {/* Fallback: qualquer rota desconhecida */}
-          <Route
-            path="*"
-            element={<Navigate to={isLoggedIn ? "/dashboard" : "/"} />}
-          />
-        </Routes>
-      </BrowserRouter>
+        <Historico />
+        <ModalFavorito />
+      </div>
     </FavoritosProvider>
   );
-}
+};
 
 export default App;

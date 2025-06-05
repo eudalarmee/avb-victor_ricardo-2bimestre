@@ -1,25 +1,46 @@
-import React, { createContext, useContext, useState } from 'react';
+import { createContext, useState, useContext } from 'react';
 
 const FavoritosContext = createContext();
+export const useFavoritos = () => useContext(FavoritosContext);
 
-export function FavoritosProvider({ children }) {
+export const FavoritosProvider = ({ children }) => {
   const [favoritos, setFavoritos] = useState([]);
+  const [modalAberto, setModalAberto] = useState(false);
+  const [itemSelecionado, setItemSelecionado] = useState(null);
 
-  const adicionarFavorito = (item) => {
-    setFavoritos((prev) => [...prev, item]);
+  const abrirModal = (item) => {
+    setItemSelecionado(item);
+    setModalAberto(true);
   };
 
-  const removerFavorito = (item) => {
-    setFavoritos((prev) => prev.filter(fav => fav !== item));
+  const fecharModal = () => {
+    setModalAberto(false);
+    setItemSelecionado(null);
+  };
+
+  const confirmarFavorito = (nomeCustomizado) => {
+    const novoFavorito = { original: itemSelecionado, nome: nomeCustomizado };
+    setFavoritos([...favoritos, novoFavorito]);
+    fecharModal();
+  };
+
+  const removerFavorito = (original) => {
+    setFavoritos(favoritos.filter(fav => fav.original !== original));
   };
 
   return (
-    <FavoritosContext.Provider value={{ favoritos, adicionarFavorito, removerFavorito }}>
+    <FavoritosContext.Provider
+      value={{
+        favoritos,
+        modalAberto,
+        itemSelecionado,
+        abrirModal,
+        fecharModal,
+        confirmarFavorito,
+        removerFavorito
+      }}
+    >
       {children}
     </FavoritosContext.Provider>
   );
-}
-
-export function useFavoritos() {
-  return useContext(FavoritosContext);
-}
+};
